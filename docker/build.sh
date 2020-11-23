@@ -18,8 +18,8 @@
 set -e
 cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"/../
 
-HASH=$(printf "$(git rev-parse HEAD)\n$(git diff | sha1sum)" | sha1sum | cut -c1-7)
+HASH=$(printf "$(git rev-parse HEAD)\n$(git diff | shasum)" | shasum | cut -c1-7)
 
-python -m poetry build
+python3 -m poetry build
 docker build -f docker/default.Dockerfile -t flower:latest -t flower:$HASH .
-docker build -f docker/sshd.Dockerfile --build-arg SSH_PUBLIC_KEY="$(cat docker/ssh_key.pub)" -t flower-sshd:latest -t flower-sshd:$HASH .
+#docker build -f docker/sshd.Dockerfile --build-arg SSH_PUBLIC_KEY="$(cat docker/ssh_key.pub)" -t flower-sshd:latest -t flower-sshd:$HASH .
