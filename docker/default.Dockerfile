@@ -7,3 +7,4 @@ COPY dist/flwr-0.11.0-py3-none-any.whl flwr-0.11.0-py3-none-any.whl
 # RUN python3.7 -m pip install --no-cache-dir 'flwr-0.11.0-py3-none-any.whl[examples-pytorch,examples-tensorflow,http-logger,baseline,ops]'
 RUN python3.7 -m pip install --no-cache-dir 'flwr-0.11.0-py3-none-any.whl[examples-tensorflow]'
 RUN rm flwr-0.11.0-py3-none-any.whl
+ENTRYPOINT ["python", "-m", "flwr_example.factory.flask_factory_client"]

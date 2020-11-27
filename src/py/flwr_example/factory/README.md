@@ -1,8 +1,8 @@
 ### Run client
 
-`python3 -m flwr_example.factory.client --server=localhost:8080 --source=MNIST --model=keras --sink=robot.controller`
+`python3 -m flwr_example.factory.flask_factory_client`
 
-`docker run -it flower python3 -m flwr_example.factory.client --server=localhost:8080 --source=MNIST --model=keras --sink=robot.controller`
+`docker run --publish 5000:5000 -it flower:latest bash`
 
 ### Run server
 
