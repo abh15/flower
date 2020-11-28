@@ -74,9 +74,9 @@ def start():
 
         fl.client.start_keras_client(server_address=server, client=client)
 
-
-    thread = Thread(target=configureClient, kwargs={'source': request.args.get('source'), 'model': request.args.get('model'), 
-                                                    'sink' : request.args.get('sink'), 'server': request.args.get('server')})
+  
+    thread = Thread(target=configureClient, kwargs={'source': request.form.get('source'), 'model': request.form.get('model'), 
+                                                    'sink' : request.form.get('sink'), 'server': request.form.get('server')})
     thread.start()
 
     return 'ok', 200 
