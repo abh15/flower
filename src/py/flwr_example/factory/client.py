@@ -13,9 +13,9 @@ def main() -> None:
     """Load data, create and start FashionMnistClient."""
     parser = argparse.ArgumentParser(description="Flower")
     parser.add_argument(
-        "--server_address",
+        "--server",
         type=str,
-        default="localhost:8080",
+        default="localhost:6000",
         help=f"gRPC server address (default: localhost:8080)",
     )
     parser.add_argument(
@@ -98,7 +98,7 @@ def main() -> None:
     client = MnistClient(model, x_train, y_train, x_test, y_test)
 
     # Start client
-    fl.client.start_keras_client(server_address=args.server_address, client=client)
+    fl.client.start_keras_client(server_address=args.server, client=client)
 
 
 if __name__ == "__main__":

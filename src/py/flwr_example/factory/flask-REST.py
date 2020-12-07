@@ -2,7 +2,7 @@
 
 from typing import Dict, Tuple, cast
 from threading import Thread
-
+import subprocess
 import numpy as np
 import tensorflow as tf
 
@@ -74,13 +74,34 @@ def start():
 
         fl.client.start_keras_client(server_address=server, client=client)
 
-  
-    thread = Thread(target=configureClient, kwargs={'source': request.form.get('source'), 'model': request.form.get('model'), 
-                                                    'sink' : request.form.get('sink'), 'server': request.form.get('server')})
-    thread.start()
-
+    numClients = int(request.form.get('num'))
+    src= request.form.get('source')
+    model= request.form.get('model')
+    sink= request.form.get('sink')
+    serv= request.form.get('server')   
+    prefix = "python3 -m flwr_example.factory.client"
+    for client in range(numClients):
+        process = subprocess.Popen(prefix+" --server="+serv+" --source="+src+" --model="+model+" --sink="+sink, shell=True)
     return 'ok', 200 
 
+#starts flwr server using received arguments
+@app.route('/launch', methods=['GET', 'POST'])
+def launch():
+    def configureServer(maxNumClients : int) -> None:
+        client_manager = fl.server.SimpleClientManager()
+        strategy = fl.server.strategy.FedAvg(min_fit_clients = maxNumClients, min_available_clients = maxNumClients)
+        server = fl.server.Server(client_manager=client_manager, strategy=strategy)
+        # Run server
+        fl.server.start_server(
+            "localhost:6000",
+            server,
+            config={"num_rounds": 2},
+        )
 
+    thread = Thread(target=configureServer, kwargs={'maxNumClients': int(request.form.get('maxcli'))})
+    thread.start()
+    return 'ok', 200
+
+    
 if __name__=='__main__':
     app.run(host='0.0.0.0')
