@@ -1,3 +1,6 @@
+# Dockerizeation
+`bash docker/build.sh`
+
 # Flower (`flwr`) - A Friendly Federated Learning Framework
 
 [![GitHub license](https://img.shields.io/github/license/adap/flower)](https://github.com/adap/flower/blob/main/LICENSE)
