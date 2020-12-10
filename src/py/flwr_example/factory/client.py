@@ -43,6 +43,7 @@ def main() -> None:
     print("Source is " + args.source + "\n")
     print("Model is " + args.model + "\n")
     print("Sink is" + args.sink + "\n")
+    print("Server is" + args.server + "\n")
 
 
 

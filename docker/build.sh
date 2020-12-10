@@ -23,3 +23,5 @@ HASH=$(printf "$(git rev-parse HEAD)\n$(git diff | shasum)" | shasum | cut -c1-7
 python3 -m poetry build
 docker build -f docker/default.Dockerfile -t flower:latest -t flower:$HASH .
 #docker build -f docker/sshd.Dockerfile --build-arg SSH_PUBLIC_KEY="$(cat docker/ssh_key.pub)" -t flower-sshd:latest -t flower-sshd:$HASH .
+docker tag flower:latest abh15/flower:latest
+docker push abh15/flower:latest

@@ -7,10 +7,21 @@ import flwr as fl
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Flower")
     parser.add_argument(
-        "--server_address",
+        "--mincli",
         type=str,
-        default="localhost:6000",
-        help=f"gRPC server address (default: localhost:6000)",
+        default="2",
+        help=f"Specifies min number of clients",
     )
     args = parser.parse_args()
-    fl.server.start_server(config={"num_rounds": 3}, server_address=args.server_address)
+
+
+    client_manager = fl.server.SimpleClientManager()
+    strategy = fl.server.strategy.FedAvg(min_fit_clients = args.mincli, min_available_clients = args.mincli)
+    server = fl.server.Server(client_manager=client_manager, strategy=strategy)
+    # Run server
+    fl.server.start_server(
+        "0.0.0.0:6000",
+        server,
+        config={"num_rounds": 2},
+    )
+   
