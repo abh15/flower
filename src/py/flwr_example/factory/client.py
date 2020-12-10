@@ -16,7 +16,7 @@ def main() -> None:
         "--server",
         type=str,
         default="localhost:6000",
-        help=f"gRPC server address (default: localhost:8080)",
+        help=f"gRPC server address (default: localhost:6000)",
     )
     parser.add_argument(
         "--source",
